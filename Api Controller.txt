@@ -1,0 +1,22 @@
+parte 25 video zuluaga
+[HttPost]
+[Route("GetProductById")]
+public async Task<IActionResult> GetProductAsync(int? id)
+{
+if(!ModelState.IsValid)
+{
+return BadRequest();
+}
+
+  var product = await _dataContext.Products
+    .Include(p => p.Store)
+    .FirstOrDefaultAsync(o => o.Store.Id  == id);
+
+if(product  == null)
+{
+
+ return NotFound();
+}
+
+return Ok(product);
+}
